@@ -1,0 +1,2 @@
+[servers]
+192.168.29.90 ansible_user=sravani
