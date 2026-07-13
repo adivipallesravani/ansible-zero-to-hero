@@ -1,0 +1,23 @@
+student:
+  name: Sravani
+  course: Ansible
+  experience: 3.6
+
+packages:
+  - git
+  - vim
+  - httpd
+
+servers:
+  - hostname: web01
+    ip: 192.168.29.90
+    os: CentOS
+
+  - hostname: web02
+    ip: 192.168.29.91
+    os: Ubuntu
+
+application:
+  name: Apache
+  version: 2.4
+  enabled: true
