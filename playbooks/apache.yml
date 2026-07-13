@@ -1,0 +1,25 @@
+---
+- name: Install and Configure Apache
+  hosts: servers
+  become: true
+
+  tasks:
+
+    - name: Install Apache
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+
+    - name: Copy index.html
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start and Enable Apache
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
