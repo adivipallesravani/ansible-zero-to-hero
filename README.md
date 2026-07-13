@@ -2,26 +2,27 @@
 
 A hands-on learning repository documenting my journey of mastering **Ansible** from the fundamentals to advanced automation concepts.
 
-This repository combines **theory**, **practical labs**, **interview preparation**, and **real-world troubleshooting** performed on my local Ansible lab.
+This repository combines **theory**, **hands-on labs**, **interview preparation**, and **real-world troubleshooting** performed in a local Ansible lab environment.
 
 ---
 
 # 📖 About This Repository
 
-This project is built while learning Ansible in a real lab environment instead of only following theory.
+This project is built while learning Ansible by performing practical exercises instead of only studying theory.
 
 Every topic includes:
 
 - Concepts
 - Architecture diagrams
 - Step-by-step implementation
+- Hands-on examples
 - Verification
 - Common mistakes
 - Troubleshooting
 - Interview questions
 - Key learnings
 
-The goal is to build a practical knowledge base that can be used for revision, interview preparation, and future reference.
+The goal is to build a practical knowledge base for revision, interview preparation, and future reference.
 
 ---
 
@@ -44,26 +45,48 @@ The goal is to build a practical knowledge base that can be used for revision, i
 ```text
 ansible-zero-to-hero/
 │
+├── README.md
+├── inventory
+│
 ├── docs/
 │   ├── 01-lab-setup/
 │   ├── 02-ssh/
 │   ├── 03-inventory/
-│   └── 04-adhoc-commands/
+│   ├── 04-adhoc-commands/
+│   └── 05-playbooks/
+│       ├── 01-yaml-basics/
+│       ├── 02-playbook-structure/
+│       └── 03-first-playbook/
 │
-├── inventory
-├── README.md
-└── screenshots/
+├── examples/
+│   └── sample.yml
+│
+├── playbooks/
+│   └── ping.yml
+│
+└── files/
 ```
 
 ---
 
 # 📚 Learning Roadmap
 
+## Foundations
+
 - [x] Lab Setup
 - [x] SSH Passwordless Authentication
 - [x] Inventory
 - [x] Ad Hoc Commands
-- [ ] Playbooks
+
+## Playbooks
+
+- [x] YAML Basics
+- [x] Playbook Structure
+- [x] First Playbook
+- [ ] Apache Deployment
+
+## Advanced Ansible
+
 - [ ] Variables
 - [ ] Facts
 - [ ] Conditionals
@@ -72,38 +95,49 @@ ansible-zero-to-hero/
 - [ ] Handlers
 - [ ] Roles
 - [ ] Ansible Vault
-- [ ] Galaxy
+- [ ] Ansible Galaxy
 - [ ] Best Practices
 
 ---
 
 # 📖 Topics Covered
 
-## Fundamentals
+## Foundations
 
-- Lab Setup
-- SSH
-- Inventory
+- Lab Environment Setup
+- SSH Passwordless Authentication
+- Inventory Management
 - Ad Hoc Commands
+
+## Playbooks
+
+- YAML Basics
+- Playbook Structure
+- First Ansible Playbook
 
 ## Coming Soon
 
-- Playbooks
+- Apache Deployment
 - Variables
-- Loops
+- Facts
 - Conditionals
+- Loops
 - Templates
 - Roles
-- Vault
-- Galaxy
+- Handlers
+- Ansible Vault
+- Ansible Galaxy
 
 ---
 
 # 🎯 Learning Goals
 
 - Understand Ansible architecture.
-- Build automation using Playbooks.
-- Learn Infrastructure Automation.
+- Learn SSH-based automation.
+- Manage inventories.
+- Execute Ad Hoc commands.
+- Write reusable Ansible Playbooks.
+- Deploy applications using automation.
 - Prepare for DevOps interviews.
 - Build a production-ready Ansible portfolio.
 
@@ -114,30 +148,35 @@ ansible-zero-to-hero/
 | Chapter | Status |
 |----------|--------|
 | Lab Setup | ✅ Completed |
-| SSH | ✅ Completed |
+| SSH Passwordless Authentication | ✅ Completed |
 | Inventory | ✅ Completed |
 | Ad Hoc Commands | ✅ Completed |
-| Playbooks | ⏳ In Progress |
+| YAML Basics | ✅ Completed |
+| Playbook Structure | ✅ Completed |
+| First Playbook | ✅ Completed |
+| Apache Deployment | ⏳ In Progress |
 
 ---
 
 # 💻 Technologies Used
 
-- Linux
-- WSL2
-- CentOS Stream
 - Ansible
+- Linux
+- Ubuntu (WSL2)
+- CentOS Stream
+- SSH
 - Git
 - GitHub
-- SSH
-- VirtualBox
+- Oracle VirtualBox
+- YAML
 
 ---
 
 # 📌 Repository Highlights
 
-- Practical hands-on examples
+- Hands-on Ansible labs
 - Real terminal outputs
+- Professional documentation
 - Architecture diagrams
 - Troubleshooting guides
 - Interview questions
@@ -149,10 +188,10 @@ ansible-zero-to-hero/
 
 This repository is maintained as part of my personal learning journey.
 
-Suggestions and improvements are always welcome.
+Suggestions and improvements are welcome.
 
 ---
 
 # ⭐ Support
 
-If you find this repository useful, consider giving it a ⭐ on GitHub.o
+If you find this repository useful, consider giving it a ⭐ on GitHub.
