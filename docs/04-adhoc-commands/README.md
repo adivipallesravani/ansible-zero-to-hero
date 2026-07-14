@@ -6,7 +6,7 @@ Understand how to execute one-time administrative tasks on managed nodes using A
 
 ---
 
-## What are Ad Hoc Commands?
+# What are Ad Hoc Commands?
 
 Ad Hoc commands are one-line Ansible commands used to perform quick administrative tasks on managed nodes.
 
@@ -22,7 +22,7 @@ They are commonly used for:
 
 ---
 
-## Syntax
+# Syntax
 
 ```bash
 ansible <host-pattern> -i <inventory-file> -m <module> -a "<arguments>"
@@ -36,7 +36,7 @@ ansible servers -i inventory -m ping
 
 ---
 
-## Ad Hoc Command Flow
+# Ad Hoc Command Flow
 
 ```text
 Controller Node
@@ -81,7 +81,7 @@ ansible servers -i inventory -m ping
 
 ### Explanation
 
-The `ping` module checks whether Ansible can successfully communicate with the managed node over SSH. It does not perform an ICMP ping.
+The `ping` module checks whether Ansible can successfully communicate with the managed node over SSH. It does **not** perform an ICMP ping.
 
 ---
 
@@ -132,7 +132,7 @@ Filesystem           Size  Used Avail Use% Mounted on
 
 ### Explanation
 
-The `shell` module executes commands through the shell and supports shell features such as pipes and redirection.
+The `shell` module executes commands through a shell and supports shell features such as pipes (`|`), redirection (`>`), and environment variables.
 
 ---
 
@@ -201,12 +201,35 @@ Installs software packages on managed nodes.
 ### Command
 
 ```bash
-ansible servers -i inventory -b -m yum -a "name=httpd state=present"
+ansible servers -i inventory -b -m dnf -a "name=httpd state=present"
 ```
 
-### Note
+### Output
 
-Package installation could not be completed because the CentOS BaseOS/AppStream repositories were unavailable in the lab environment.
+```text
+192.168.29.90 | CHANGED => {
+    "changed": true,
+    "name": "httpd",
+    "state": "present"
+}
+```
+
+### Verification
+
+```bash
+ansible servers -i inventory -m command -a "rpm -q httpd"
+```
+
+### Example Output
+
+```text
+192.168.29.90 | CHANGED | rc=0 >>
+httpd-2.4.62-14.el9.x86_64
+```
+
+### Explanation
+
+The `dnf` module installs and manages software packages on CentOS Stream 9 and other RHEL-based Linux distributions. If the package is already installed, Ansible reports `ok` without making any changes, demonstrating idempotent behavior.
 
 ---
 
@@ -214,20 +237,20 @@ Package installation could not be completed because the CentOS BaseOS/AppStream 
 
 ### Purpose
 
-Starts, stops, or restarts services.
+Starts, stops, restarts, or enables services.
 
 ### Command
 
 ```bash
-ansible servers -i inventory -K -b -m service -a "name=sshd state=started"
+ansible servers -i inventory -K -b -m service -a "name=httpd state=started enabled=yes"
 ```
 
 ### Output
 
 ```text
 192.168.29.90 | SUCCESS => {
-    "changed": false,
-    "name": "sshd",
+    "changed": true,
+    "name": "httpd",
     "state": "started"
 }
 ```
@@ -273,26 +296,26 @@ uid=1008(developer) gid=1012(developer) groups=1012(developer)
 
 ### Explanation
 
-The `user` module creates and manages user accounts. Administrative privileges are required, so the `-b` and `-K` options were used.
+The `user` module creates and manages Linux user accounts. Administrative privileges are required, so `-b` and `-K` are used.
 
 ---
 
-## Verification
+# Verification
 
 | Module | Status |
-|----------|--------|
+|---------|--------|
 | Ping | ✅ Successful |
 | Command | ✅ Successful |
 | Shell | ✅ Successful |
 | Copy | ✅ Successful |
 | File | ✅ Successful |
-| Package | ⚠ Repository issue |
+| Package | ✅ Successful |
 | Service | ✅ Successful |
 | User | ✅ Successful |
 
 ---
 
-## Common Mistakes
+# Common Mistakes
 
 - Incorrect inventory file path.
 - Running commands without SSH connectivity.
@@ -303,113 +326,105 @@ The `user` module creates and manages user accounts. Administrative privileges a
 
 ---
 
-## Troubleshooting
+# Troubleshooting
 
-### Copy Module Failed
+## Copy Module Failed
 
-**Error**
+### Error
 
 ```text
 Could not find or access 'test.txt'
 ```
 
-**Reason**
+### Reason
 
 The source file did not exist on the controller node.
 
-**Solution**
+### Solution
 
-Create the file before running the copy module.
+Create the file before running the `copy` module.
 
 ---
 
-### Missing sudo password
+## Missing sudo password
 
-**Error**
+### Error
 
 ```text
 Missing sudo password
 ```
 
-**Reason**
+### Reason
 
 Privilege escalation was requested without providing the sudo password.
 
-**Solution**
+### Solution
 
 Use the `-K` option together with `-b`.
 
 ---
 
-### Package Installation Failed
-
-**Reason**
-
-The CentOS package repositories (BaseOS/AppStream) were unavailable.
-
----
-
-## Key Learnings
+# Key Learnings
 
 - Executed Ansible Ad Hoc commands from the controller node.
 - Verified connectivity using the Ping module.
 - Executed remote commands using the Command and Shell modules.
 - Copied files using the Copy module.
 - Created directories using the File module.
+- Installed software packages using the DNF module.
 - Managed services using the Service module.
 - Created Linux users using the User module.
 - Learned when privilege escalation (`-b`) and sudo password (`-K`) are required.
 
 ---
 
-## Interview Notes
+# Interview Notes
 
-### Q1. What are Ad Hoc Commands?
+## Q1. What are Ad Hoc Commands?
 
 Ad Hoc commands are one-time Ansible commands used to execute administrative tasks without writing playbooks.
 
 ---
 
-### Q2. What is the difference between the Command and Shell modules?
+## Q2. What is the difference between the Command and Shell modules?
 
-The Command module executes commands directly without using a shell.
+The `command` module executes commands directly without using a shell.
 
-The Shell module executes commands through a shell and supports pipes, redirection, and environment variables.
-
----
-
-### Q3. Why are `-b` and `-K` used?
-
-`-b` enables privilege escalation (become/sudo).
-
-`-K` prompts for the sudo password when required.
+The `shell` module executes commands through a shell and supports pipes, redirection, and environment variables.
 
 ---
 
-### Q4. Why did the Copy module initially fail?
+## Q3. Why are `-b` and `-K` used?
+
+- `-b` enables privilege escalation (become/sudo).
+- `-K` prompts for the sudo password when required.
+
+---
+
+## Q4. Why did the Copy module initially fail?
 
 Because the source file (`test.txt`) did not exist on the controller node.
 
 ---
 
-### Q5. Why did the Package module fail?
+## Q5. Which module is used to install packages on CentOS Stream 9?
 
-The managed node's package repositories were unavailable, so Ansible could not install packages.
+The `dnf` module is commonly used to install and manage software packages on CentOS Stream 9.
 
 ---
 
-### Q6. Why are Playbooks preferred over Ad Hoc Commands?
+## Q6. Why are Playbooks preferred over Ad Hoc Commands?
 
 Playbooks are reusable, version-controlled, and better suited for complex automation.
 
 ---
 
-## References
+# References
 
 - Official Ansible Documentation
 
 ---
 
-## Next Step
+# Next Step
 
-The next chapter covers **Ansible Playbooks**, where repeatable automation tasks are written using YAML.
+The next chapter covers Ansible Playbooks, where repeatable automation tasks are written using YAML.
